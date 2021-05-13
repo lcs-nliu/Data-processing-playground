@@ -16,15 +16,44 @@
  - callout(Exercise): Complete the two functions below to return the indices of the items with maximum and minimum counts in an array of `TabulatedValue`s. (Hint: You'll use the style of `for ... in` that counts counts a range of numbers from zero to the last index of the array: `for i in 0 ... tabulatedValues.count - 1`.)
  */
 func indexOfMaximum(from tabulatedValues: [TabulatedValue]) -> Int {
+    var mostPopularIndex = 0
+    
+    for i in 0..<tabulatedValues.count-1 {
+        if tabulatedValues[i].count > tabulatedValues[mostPopularIndex].count {
+            mostPopularIndex = i
+        }
+    }
+    
+    return mostPopularIndex
 }
 
+
+
 func indexOfMinimum(from tabulatedValues: [TabulatedValue]) -> Int {
+    
+    var leastPopularIndex = 0
+    for i in 0 ..< tabulatedValues.count-1 {
+        if tabulatedValues[i].count < tabulatedValues[leastPopularIndex].count {
+            leastPopularIndex = i
+        }
+    }
+    
+    return leastPopularIndex
 }
 /*:
  - callout(Exercise): Test your functions by printing out the most popular show and the least popular show. The tabulator for the survey results has already been created for you below.
  */
 print(tabulator.tabulatedValues)
 
+print("")
+let indexForMostPopular = indexOfMaximum(from: tabulator.tabulatedValues)
+print("The most popular show is: \(tabulator.tabulatedValues[indexForMostPopular].value)")
+print("It has this many viewings by our users: \(tabulator.tabulatedValues[indexForMostPopular].count)")
+
+print("")
+let indexForLeastPopular = indexOfMinimum(from: tabulator.tabulatedValues)
+print("The least popular show is: \(tabulator.tabulatedValues[indexForLeastPopular].value)")
+print("It has this many viewings by our users: \(tabulator.tabulatedValues[indexForLeastPopular].count)")
 /*:
  ## Show lists
 

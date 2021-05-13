@@ -19,14 +19,28 @@ var moderatelyPopular = [TabulatedValue]()
 var veryPopular = [TabulatedValue]()
 
 // Create constants to store the median and the median absolute deviation.
+let notVeryPopularTreshold = tabulator.median() - tabulator.medianAbsoluteDeviation()
+let veryPopularTreshold = tabulator.median() + tabulator.medianAbsoluteDeviation()
 
 for show in tabulator.tabulatedValues {
     // If the show's count is less than the median value minus the median absolute deviation, it's not very popular.
+    if show.count < notVeryPopularTreshold {
+        notVeryPopular.append(show)
+    } else if show.count > veryPopularTreshold {
+        veryPopular.append(show)
+    } else {
+        moderatelyPopular.append(show)
+    }
+    
     // If the show's count is greater than the median value plus the median absolute deviation, it's very popular.
     // Otherwise, it's moderately popular.
 }
 
 // Print out the shows in each tier.
+print(notVeryPopular)
+print(moderatelyPopular)
+print(veryPopular)
+
 
 //: - callout(Exercise): As a bonus, modify the code above to print out the count ranges for each tier.
 
