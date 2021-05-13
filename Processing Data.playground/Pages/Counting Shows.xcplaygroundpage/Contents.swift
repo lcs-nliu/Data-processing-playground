@@ -6,8 +6,21 @@
  There's a `randomShowData` array constant that simulates the results of a survey containing just 10 responses so you can test your code. It'll be different each time your code runs. (If you want, you can print the `randomShowData` to the console for verification.)
  */
 randomShowData
+print(randomShowData)
 //:  - callout(Exercise): Using the comments as a guide, tally the survey results simulated in `randomShowData`.
 // Create a Tabulator instance.
+var tabulator = Tabulator()
+for data in randomShowDataLargeSet {
+    tabulator.incrementCount(forValue: data)
+
+}
+
+for movie in tabulator.values {
+    print(movie)
+    print(tabulator.count(forValue: movie))
+}
+
+
 
 // Loop through the shows in randomShowData, incrementing the count for each one.
 
