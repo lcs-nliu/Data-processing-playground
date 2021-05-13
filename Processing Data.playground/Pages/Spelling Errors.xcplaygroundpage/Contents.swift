@@ -1,6 +1,6 @@
 /*:
-## Spelling Errors
-
+ ## Spelling Errors
+ 
  By using the existing edit distance algorithm as the basis of your code to detect spelling errors, rather than coming up with your own, you'll benefit from:
  
  - Reduced development time.
@@ -10,10 +10,10 @@
  That's why it's very rare to find code that *doesn't* use existing algorithms in some way. The iOS SDK is a good example of existing algorithms—they make the process of building an app much easier than if you had to write all the code yourself (for example, to draw all the letters of all the text onscreen).
  
  Now it's time to correct the remaining errors in your survey data. You'll solve the problem with a modular solution.
-
+ 
  - callout(Exercise): First, complete the function below, which returns the closest match in the show catalog for a given string.\
-\
-(The `editDistance()` function is implemented elsewhere so that you can use it without its code cluttering up your solution.)
+ \
+ (The `editDistance()` function is implemented elsewhere so that you can use it without its code cluttering up your solution.)
  */
 // Looks through the potentialMatches array to find the item that most closely matches the string in the first argument, and returns that string.
 func closestMatch(for string: String, from potentialMatches: [String]) -> String {
@@ -24,11 +24,18 @@ func closestMatch(for string: String, from potentialMatches: [String]) -> String
     
     for i in 0 ..< potentialMatches.count {
         // Get the potential match at index i
+        let potentialMatchIndex = i
         
         // Get the edit distance from the string to the potential match
         
+        let potentialEditDistance = editDistance(from: string, to: potentialMatches[i])
+        
         // If the distance calculated above is better than best edit distance,
         // update the best edit distance and best match index
+        if potentialEditDistance < bestEditDistance {
+            bestEditDistance = potentialEditDistance
+            bestMatchIndex = potentialMatchIndex
+        }
     }
     
     return potentialMatches[bestMatchIndex]
@@ -36,9 +43,9 @@ func closestMatch(for string: String, from potentialMatches: [String]) -> String
 
 /*:
  - callout(Exercise): Starting with your solution code from [Correcting Errors](Correcting%20Errors), add the following steps:
-    1. After you've created the lowercase version of the survey value, check to see if it's in the lowercase version of the show catalog included in this playground page as `lowercaseCatalog`.
-    2. If it is, tally it as usual.
-    3. If it's not, tally the closest match from the catalog.\
+ 1. After you've created the lowercase version of the survey value, check to see if it's in the lowercase version of the show catalog included in this playground page as `lowercaseCatalog`.
+ 2. If it is, tally it as usual.
+ 3. If it's not, tally the closest match from the catalog.\
  \
  As a bonus, print the errors and their corrections when you find them.
  
@@ -54,25 +61,55 @@ print("\n\n***** TABULATION FOR VALID DATA ******\n\n")
 
 // Create a Tabulator instance.
 
+var tabulator = Tabulator()
+
 // Loop through surveyData. Make a lowercase version of each value.
 //      - If the catalog contains the value, increment its count.
 //      - Otherwise, find the closest match for the value and increment the count for that.
 
+for data in surveyData {
+    var lowercasedData = data.lowercased()
+    
+    if lowercaseCatalog.contains(lowercasedData) {
+        tabulator.incrementCount(forValue: lowercasedData)
+    } else {
+        
+        let closestMovie = closestMatch(for: lowercasedData, from: lowercaseCatalog)
+        tabulator.incrementCount(forValue: closestMovie)
+        
+    }
+}
+
 // Loop through all tabulator values. Print only those that are contained in the lowercase version of the show catalog.
+
+
+for movie in tabulator.values {
+    if lowercaseCatalog.contains(movie) {
+        print(movie)
+        print(tabulator.count(forValue: movie))
+    }
+}
 
 // Print a header
 print("\n\n***** DATA ERRORS ******\n\n")
 
 // Create a variable to keep a count of the errors.
 
+var errorCount = 0
+
 // Loop through all tabulator values.
 //      If a value is not contained in the lowercase show catalog:
 //      - Increase the error count
 //      - Print it
 
+for value in tabulator.values {
+    if lowercaseCatalog.contains(value) == false {
+        errorCount += 1
+    }
+}
 // Print the error count.
-
+print(errorCount)
 
 /*:
-[Previous](@previous)  |  page 7 of 11  |  [Next: Higher-Order Information](@next)
+ [Previous](@previous)  |  page 7 of 11  |  [Next: Higher-Order Information](@next)
  */
