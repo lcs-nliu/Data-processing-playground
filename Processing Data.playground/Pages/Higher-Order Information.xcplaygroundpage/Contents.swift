@@ -18,6 +18,8 @@
 var tabulator = Tabulator()
 
 tabulator.incrementCount(forValue: "Ocean Express")
+tabulator.incrementCount(forValue: "Jaws")
+tabulator.incrementCount(forValue: "Ocean Express")
 
 print(tabulator.tabulatedValues)
 
