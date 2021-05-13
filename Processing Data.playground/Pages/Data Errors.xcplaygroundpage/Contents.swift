@@ -6,11 +6,22 @@
  - callout(Exercise): Use the space below to tabulate the survey data and print the results. You can use the same technique you used the previous page.
  */
 // Create a Tabulator instance.
+var tabulator = Tabulator()
 
 // Loop through surveyData, incrementing the count for each response.
 
+for data in surveyData {
+    tabulator.incrementCount(forValue: data)
+}
+
+print(tabulator.values)
+
 // Loop through the tallied shows (stored in tabulator.values), printing the information from each one.
 
+for movie in tabulator.values {
+    print(movie)
+    print(tabulator.count(forValue: movie))
+}
 /*:
  If you look at the output, you can see that some users made errors in their responses. They're pretty easy to spot because each error value has a count of 1 in the tabulator. You want to provide the most accurate data to the Streaming Plus marketing team, so you should clean up these errors.
  
@@ -24,11 +35,20 @@ showCatalog
 
 print("\n\n***** FIRST CLEANING PASS *****\n\n")
 // Print a header
+
 print("\n\n***** TABULATION FOR VALID DATA ******\n\n")
 
 // Loop through all tabulator values. Only print the count for those that are contained in showCatalog.
 
+for correctValue in tabulator.values {
+    if showCatalog.contains(correctValue) {
+        print(correctValue)
+    }
+}
+
 // Create a variable to keep a count of the errors.
+
+var errorCount = 0
 
 // Print a header
 print("\n\n***** DATA ERRORS ******\n\n")
@@ -37,6 +57,14 @@ print("\n\n***** DATA ERRORS ******\n\n")
 // If a value is not contained in showCatalog:
 // - Increase the error count
 // - Print it
+
+for errorValue in tabulator.values {
+    if showCatalog.contains(errorValue) == false {
+        errorCount += 1
+    }
+    
+}
+print(errorCount)
 
 // Print the error count.
 
