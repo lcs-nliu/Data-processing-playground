@@ -69,7 +69,8 @@ func editDistance(from a: String, to b: String) -> Int {
     return matrix[m][n]
 }
 //:  - callout(Exercise): Try the `editDistance()` function with some strings below to see it in action.
-editDistance(from: "cat", to: "cake")
+print(editDistance(from: "cat", to: "cake"))
+editDistance(from: "hi mtname is", to: "hi my name is")
 
 /*:
 [Previous](@previous)  |  page 6 of 11  |  [Next: Spelling Errors](@next)
